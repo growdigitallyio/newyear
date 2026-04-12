@@ -83,3 +83,40 @@ body {
 	background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBWOMvbXrfrLL6sqXDisAeqd5cPjYyFRwU0nuxDI7kifk4h48Tkkomk6qdbk7g2wvLNb0j9T1-hPITNRzhLo9fatglp6rRR25XvQBi3Asapt4Q3rJPtveUdodJ3GMdznO7oC6myV1kB5JVvuDi4ZG-0BDtUfPKYDyxAYc1iW2pIYpuP-jqyxIoZPBgARejOCzdWghZt7pKmfCprLdwuXFkzPIUcgbkb2ZWJmSCaluqLNUXgiox7JW8jhXm6phJPjs5Kdpz__FgmMKy7);
 	opacity: 0.05;
 }
+
+.falling-kavili-layer {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 40;
+}
+
+.falling-kavili {
+	position: absolute;
+	top: -90px;
+	object-fit: contain;
+	opacity: 0;
+	filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+	animation-name: falling-kavili;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	will-change: transform, opacity;
+}
+
+@keyframes falling-kavili {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, -10vh, 0) rotate(0deg);
+	}
+	10% {
+		opacity: 0.9;
+	}
+	70% {
+		opacity: 0.95;
+	}
+	100% {
+		opacity: 0;
+		transform: translate3d(var(--drift, 0px), 120vh, 0) rotate(540deg);
+	}
+}

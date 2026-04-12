@@ -1,10 +1,258 @@
-﻿import React from 'react'
+﻿import React, { useEffect, useMemo, useState } from 'react'
 import nakathDetails from '../assets/nakath'
+import kokis from '../assets/kokis.png'
+import kaum from '../assets/kaum.png'
+import kiribath from '../assets/kiribath.png'
+
+const sinhalaMonthMap = {
+  ජනවාරි: 0,
+  පෙබරවාරි: 1,
+  මාර්තු: 2,
+  අප්‍රේල්: 3,
+  මැයි: 4,
+  ජූනි: 5,
+  ජූලි: 6,
+  අගෝස්තු: 7,
+  සැප්තැම්බර්: 8,
+  ඔක්තෝබර්: 9,
+  නොවැම්බර්: 10,
+  දෙසැම්බර්: 11,
+}
+
+const parseDateParts = (dateText) => {
+  const match = dateText.match(/(\d{4})\s+([^\s]+)\s+(\d{1,2})/)
+  if (!match) return null
+
+  const year = Number(match[1])
+  const monthName = match[2]
+  const day = Number(match[3])
+  const month = sinhalaMonthMap[monthName]
+
+  if (Number.isNaN(year) || Number.isNaN(day) || month === undefined) return null
+  return { year, month, day }
+}
+
+const parseTimeMatches = (timeText) => {
+  const regex = /(පූර්වභාග|අපරභාග)\s*(\d{1,2})\.(\d{2})/g
+  const matches = []
+  let match = regex.exec(timeText)
+
+  while (match) {
+    const period = match[1]
+    const rawHour = Number(match[2])
+    const minute = Number(match[3])
+    let hour = rawHour
+
+    if (period === 'පූර්වභාග' && rawHour === 12) hour = 0
+    if (period === 'අපරභාග' && rawHour < 12) hour = rawHour + 12
+
+    matches.push({ hour, minute })
+    match = regex.exec(timeText)
+  }
+
+  return matches
+}
+
+const fallingKavili = [
+  {
+    alt: 'කැවුම්',
+    src: kaum,
+    left: '6%',
+    size: '50px',
+    duration: '11s',
+    delay: '0s',
+    drift: '-90px',
+    rotate: '-18deg',
+  },
+  {
+    alt: 'කොකිස්',
+    src: kokis,
+    left: '14%',
+    size: '50px',
+    duration: '13s',
+    delay: '1.5s',
+    drift: '75px',
+    rotate: '12deg',
+  },
+  {
+    alt: 'අලුවා',
+    src: kiribath,
+    left: '24%',
+    size: '58px',
+    duration: '12s',
+    delay: '3.3s',
+    drift: '-60px',
+    rotate: '-10deg',
+  },
+  {
+    alt: 'කැවුම්',
+    src: kaum,
+    left: '36%',
+    size: '50px',
+    duration: '14s',
+    delay: '2.1s',
+    drift: '55px',
+    rotate: '9deg',
+  },
+  {
+    alt: 'කොකිස්',
+    src: kokis,
+    left: '48%',
+    size: '50px',
+    duration: '10.5s',
+    delay: '0.8s',
+    drift: '-70px',
+    rotate: '-12deg',
+  },
+  {
+    alt: 'අලුවා',
+    src: kiribath,
+    left: '59%',
+    size: '58px',
+    duration: '12.8s',
+    delay: '4.1s',
+    drift: '95px',
+    rotate: '14deg',
+  },
+  {
+    alt: 'කැවුම්',
+    src: kaum,
+    left: '71%',
+    size: '50px',
+    duration: '11.6s',
+    delay: '2.7s',
+    drift: '-65px',
+    rotate: '-16deg',
+  },
+  {
+    alt: 'කොකිස්',
+    src: kokis,
+    left: '83%',
+    size: '50px',
+    duration: '13.5s',
+    delay: '1.2s',
+    drift: '85px',
+    rotate: '11deg',
+  },
+  {
+    alt: 'අලුවා',
+    src: kiribath,
+    left: '92%',
+    size: '58px',
+    duration: '10.8s',
+    delay: '3.8s',
+    drift: '-72px',
+    rotate: '-13deg',
+  },
+]
 
 const HomePage = () => {
+  const [now, setNow] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const parsedNakath = useMemo(() => {
+    return nakathDetails.map((item, index) => {
+      const dateParts = parseDateParts(item.Date)
+      const parsedTimes = dateParts ? parseTimeMatches(item.Time) : []
+
+      const allTimes = parsedTimes.map(({ hour, minute }) => {
+        return new Date(dateParts.year, dateParts.month, dateParts.day, hour, minute, 0, 0)
+      })
+
+      const startTime = allTimes[0] ?? null
+      const endTime = item.Time.includes('අවසානය') && allTimes.length > 1 ? allTimes[1] : null
+
+      return {
+        ...item,
+        index,
+        startTime,
+        endTime,
+        allTimes,
+      }
+    })
+  }, [])
+
+  const timePoints = useMemo(() => {
+    return parsedNakath
+      .flatMap((item) => item.allTimes.map((point) => ({ index: item.index, time: point })))
+      .sort((a, b) => a.time - b.time)
+  }, [parsedNakath])
+
+  const nextPoint = useMemo(() => {
+    return timePoints.find((point) => point.time > now) ?? null
+  }, [timePoints, now])
+
+  const currentNakathIndex = useMemo(() => {
+    let activeIndex = -1
+
+    parsedNakath.forEach((item) => {
+      if (!item.startTime) return
+
+      let effectiveEnd = item.endTime
+      if (!effectiveEnd) {
+        const nextAfterStart = timePoints.find((point) => point.time > item.startTime)
+        effectiveEnd = nextAfterStart?.time ?? null
+      }
+
+      if (now >= item.startTime && (!effectiveEnd || now < effectiveEnd)) {
+        activeIndex = item.index
+      }
+    })
+
+    return activeIndex
+  }, [parsedNakath, timePoints, now])
+
+  const countdown = useMemo(() => {
+    if (!nextPoint) {
+      return { days: '00', hours: '00', minutes: '00', seconds: '00' }
+    }
+
+    const totalSeconds = Math.max(0, Math.floor((nextPoint.time.getTime() - now.getTime()) / 1000))
+    const days = Math.floor(totalSeconds / 86400)
+    const hours = Math.floor((totalSeconds % 86400) / 3600)
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+    const seconds = totalSeconds % 60
+
+    return {
+      days: String(days).padStart(2, '0'),
+      hours: String(hours).padStart(2, '0'),
+      minutes: String(minutes).padStart(2, '0'),
+      seconds: String(seconds).padStart(2, '0'),
+    }
+  }, [nextPoint, now])
+
+  const nextNakath = nextPoint ? parsedNakath[nextPoint.index] : null
+
   return (
     <div className="dark">
       <div className="text-on-surface overflow-x-hidden">
+        <div className="falling-kavili-layer" aria-hidden="true">
+          {fallingKavili.map((item, index) => (
+            <img
+              key={`${item.alt}-${index}`}
+              src={item.src}
+              alt={item.alt}
+              className="falling-kavili"
+              style={{
+                left: item.left,
+                width: item.size,
+                height: item.size,
+                animationDuration: item.duration,
+                animationDelay: item.delay,
+                transform: `rotate(${item.rotate})`,
+                '--drift': item.drift,
+              }}
+            />
+          ))}
+        </div>
+
         {/* TopAppBar */}
         <header className="w-full absolute top-0 z-50 bg-transparent">
           <nav className="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
@@ -51,31 +299,33 @@ const HomePage = () => {
             />
           </div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="font-headline italic text-4xl md:text-7xl mb-4 text-[#e9c349] tracking-tight">සුභ අලුත් අවුරුද්දක් වේවා 2026</h1>
+            <h1 className="font-headline font-bold italic text-4xl md:text-7xl mb-4 text-[#e9c349] tracking-tight leading-30">සුභ අලුත් අවුරුද්දක් වේවා 2026</h1>
             <p className="font-label uppercase tracking-[0.4em] text-sm text-secondary mb-16 opacity-80">විශේෂ උත්සව සංස්කරණය</p>
 
             {/* Countdown Container */}
             <div className="glass-panel border border-secondary/15 rounded-xl p-12 mb-20 relative overflow-hidden group transition-all duration-500 hover:border-secondary/30">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary/20 to-transparent"></div>
-              <h2 className="font-label uppercase tracking-widest text-xs text-secondary/70 mb-8">මීළඟ නැකත: අලුත් අවුරුදු උදාව</h2>
+              <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-secondary/20 to-transparent"></div>
+              <h2 className="font-label font-bold uppercase tracking-widest text-lg text-secondary/70 mb-8">
+                මීළඟ නැකත: {nextNakath ? nextNakath.nakatha : 'මෙම වසරේ නැකත් අවසන්'}
+              </h2>
               <div className="flex justify-center gap-4 md:gap-12 items-baseline">
                 <div className="flex flex-col">
-                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">08</span>
+                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">{countdown.days}</span>
                   <span className="font-label text-[10px] tracking-widest uppercase mt-2 opacity-60">දින</span>
                 </div>
                 <span className="font-headline text-4xl md:text-6xl text-secondary/30 self-start mt-2">:</span>
                 <div className="flex flex-col">
-                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">14</span>
+                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">{countdown.hours}</span>
                   <span className="font-label text-[10px] tracking-widest uppercase mt-2 opacity-60">පැය</span>
                 </div>
                 <span className="font-headline text-4xl md:text-6xl text-secondary/30 self-start mt-2">:</span>
                 <div className="flex flex-col">
-                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">32</span>
+                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">{countdown.minutes}</span>
                   <span className="font-label text-[10px] tracking-widest uppercase mt-2 opacity-60">මිනිත්තු</span>
                 </div>
                 <span className="font-headline text-4xl md:text-6xl text-secondary/30 self-start mt-2">:</span>
                 <div className="flex flex-col">
-                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">15</span>
+                  <span className="font-headline text-5xl md:text-8xl text-secondary gold-glow">{countdown.seconds}</span>
                   <span className="font-label text-[10px] tracking-widest uppercase mt-2 opacity-60">තත්පර</span>
                 </div>
               </div>
@@ -97,14 +347,14 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div className="absolute top-1/4 -right-12 opacity-[0.05] blur-[2px] pointer-events-none w-56 h-56 rotate-[25deg] z-0">
+          <div className="absolute top-1/4 -right-12 opacity-[0.05] blur-[2px] pointer-events-none w-56 h-56 rotate-25deg z-0">
             <img
               alt="සම්ප්‍රදායික ශ්‍රී ලාංකික අලුවා"
               className="w-full h-full object-contain"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuApApgb_tqkAPtznY1jr8j6Zd-9q9bioi5VSSnKZWH0jp9WCtySDuJLQRP3XIs1JoFY0HDpLM8tucGL5I5v4AGIlEdt8ORQSX7FDoDoeJdJkd8AXUCYDE-9bKwh92fetPJDpfiXNur-R7-AzazP4WRahAoX7Td9qtZ3QCVIp5CBjYAV25R4sJvPNz95dpncKFXvIcz2h9T6c2Je0dG_B7JudWGQMRDY0inL2f8zWeSp_W2UxuRo2pCl9rkFmZO4JiOqyjJVWU7tQR03"
             />
           </div>
-          <div className="absolute bottom-1/4 -left-16 opacity-[0.07] blur-[3px] pointer-events-none w-64 h-64 -rotate-[15deg] z-0">
+          <div className="absolute bottom-1/4 -left-16 opacity-[0.07] blur-[3px] pointer-events-none w-64 h-64 -rotate-15deg z-0">
             <img
               alt="සම්ප්‍රදායික ශ්‍රී ලාංකික කොකිස්"
               className="w-full h-full object-contain"
@@ -128,7 +378,7 @@ const HomePage = () => {
                 <h2 className="font-headline italic text-4xl text-[#e9c349] mb-2">සුබ මොහොත</h2>
                 <p className="font-label text-xs tracking-widest uppercase opacity-40">සංස්කෘතික චාරිත්‍ර සඳහා පූජනීය වේලාවන්</p>
               </div>
-              <div className="h-px flex-grow bg-secondary/10 mx-8 hidden md:block"></div>
+              <div className="h-px grow bg-secondary/10 mx-8 hidden md:block"></div>
               <button className="font-label text-[10px] tracking-widest uppercase border border-secondary/20 px-6 py-3 rounded-full hover:bg-secondary/10 transition-all flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm" data-icon="download">
                   download
@@ -139,7 +389,7 @@ const HomePage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 overflow-hidden rounded-xl border border-secondary/10">
               {nakathDetails.map((item, index) => {
-                const isHighlighted = item.nakatha === 'පුණ්‍ය කාලය'
+                const isHighlighted = index === currentNakathIndex
 
                 return (
                   <div
