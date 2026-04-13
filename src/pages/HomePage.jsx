@@ -483,9 +483,9 @@ const HomePage = () => {
                   src={image3}
                 />
                 <div className="relative z-10">
-                  <h3 className="font-headline italic text-3xl mb-4 text-secondary">එකමුතුවේ උරුමය</h3>
+                  <h3 className="font-headline italic text-3xl mb-4 text-secondary">ආහාර පිසීම</h3>
                   <p className="font-body text-sm leading-relaxed text-on-surface/70 max-w-md">
-                    ගෝලීය සංයෝජනය සහ පවුල් බැඳීම් අතර, අලුත් අවුරුද්දේදී ශ්‍රී ලාංකිකයන් එක් කරන ගැඹුරු සම්ප්‍රදායන් හඳුනාගන්න.
+                    රක්ත වර්ණ වස්ත්‍රාභරණයෙන් සැරසී දකුණු දිශාව බලා ලිප් බැඳ ගිනි මොළවා කිරිබත්, කැවිලි වර්ගයක්, දීකිරි සහ විළඳ පිළියෙල කර ගැනීම මැනවි.
                   </p>
                 </div>
               </div>
