@@ -4,6 +4,11 @@ import kokis from '../assets/kokis.png'
 import kaum from '../assets/kaum.png'
 import kiribath from '../assets/kiribath.png'
 import logo from '../assets/Logo3.png'
+import image1 from '../assets/awruduImages/image1.png'
+import image2 from '../assets/awruduImages/image2.png'
+import image3 from '../assets/awruduImages/image3.png'
+import image4 from '../assets/awruduImages/image4.png'
+import image5 from '../assets/awruduImages/image5.png'
 
 const sinhalaMonthMap = {
   ජනවාරි: 0,
@@ -471,11 +476,11 @@ const HomePage = () => {
         <section id='gallery' className="bg-surface-container-low py-32 px-8 overflow-hidden relative">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px] md:h-[600px]">
-              <div className="md:col-span-2 md:row-span-2 bg-surface p-12 rounded-xl border border-secondary/10 flex flex-col justify-end relative overflow-hidden group">
+              <div className="md:col-span-2 md:row-span-2 p-12 rounded-xl border border-secondary/10 flex flex-col justify-end relative overflow-hidden group">
                 <img
-                  className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   data-alt="උණුසුම් ගෘහ පසුබිමක කිරිබත්, කැවුම් සහ පහන් සමඟ සැරසූ ශ්‍රී ලාංකික අවුරුදු මේසයක්"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM97W3agGogcwqIMG3fhQRaUPiw6BH7Zwt7AEOEt10WET7mJfch_s0zVxABlUy9HHbfSOW-xRDCeI5LDDiQ-eQNXNAzRVtUCq1qNqHjNOsvEgi4aQHMB8H0pkY98DABEOyAFduV7cz7FwvRk9lYhLoHqtFQ6ZbmWVDeydDgttTha-MJlDgH6J3Q7YvRFVfS2BAHWe7CP6rhkJZmmjSeq5JNEistq-UxNYfSWMnp_dAy-b4BkuG13SKMiXAvgcaXwaRxInKvvsihqb4"
+                  src={image3}
                 />
                 <div className="relative z-10">
                   <h3 className="font-headline italic text-3xl mb-4 text-secondary">එකමුතුවේ උරුමය</h3>
@@ -485,27 +490,40 @@ const HomePage = () => {
                 </div>
               </div>
               <div className="md:col-span-2 bg-surface-container-highest p-8 rounded-xl border border-secondary/10 flex items-center gap-8 group">
-                <div className="w-1/3 h-full rounded-lg overflow-hidden relative">
+                <div className="w-50 h-50 rounded-lg overflow-hidden relative">
                   <img
-                    className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                    className="absolute inset-0 w-full h-full object-cover  group-hover:grayscale-0 transition-all duration-500"
                     data-alt="සිංහල අලුත් අවුරුදු උත්සවයේ සම්ප්‍රදායික පොල්තෙල් පහනක් දැල්වීමේ සමීප දර්ශනය"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDINs6ULvAdUb0L0Fh3jwFhUcmAfVj-Ab2PuzB3GWNZ181d0iOX1OSbGx9z1l7UiTec215wmBVb3c1HzKyRVbw7BplnUEprTlhtYalpAlVBXHSN_J-ZpAYr8imWMPR2KKpR4nAB3WUVeohuqcwghpZPxcePNV90DIiwehSxYG7KcL9SjUQ4canyVCZgz64YIv3OEPmOnkWpA65EbU2Xat5B9qMeqIBWQdFdLcpOY_OYZpMS9xJogPsUVLVibuIzqtVvMERZ4l2m9XU0"
+                    src={image2}
                   />
                 </div>
                 <div className="flex-1">
                   <h4 className="font-headline italic text-xl mb-2">පූජනීය චාරිත්‍ර</h4>
                   <p className="font-body text-xs text-on-surface/60">ලිප ගිනි මොළවීමේ සිට පළමු ආහාර වේල දක්වා, සෑම ක්‍රියාවක්ම නැකත් සමඟ ගැළපේ.</p>
                 </div>
+                <div className="w-50 h-50 rounded-lg overflow-hidden border border-secondary/20 hidden md:block">
+                  <img
+                    src={image5}
+                    alt="අවුරුදු උත්සව රූපය"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
-              <div className="bg-surface p-8 rounded-xl border border-secondary/10 flex flex-col justify-center text-center group">
-                <span className="font-headline text-4xl text-secondary mb-2">2026</span>
-                <span className="font-label text-[10px] tracking-widest uppercase opacity-40">සෞභාග්‍යයේ වසර</span>
+              <div className="bg-surface p-8 rounded-xl border border-secondary/10 flex flex-col justify-center text-center group relative overflow-hidden">
+                <img
+                  src={image1}
+                  alt="අවුරුදු පසුබිම"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                
               </div>
-              <div className="bg-secondary p-8 rounded-xl flex flex-col justify-center text-on-secondary group hover:bg-secondary/90 transition-colors cursor-pointer">
-                <span className="material-symbols-outlined text-4xl mb-4" data-icon="menu_book">
-                  menu_book
-                </span>
-                <span className="font-label text-[10px] tracking-widest uppercase font-bold">සම්ප්‍රදාය මාර්ගෝපදේශය</span>
+              <div className="p-8 rounded-xl flex flex-col justify-center text-on-secondary group hover:bg-secondary/90 transition-colors cursor-pointer relative overflow-hidden">
+                <img
+                  src={image4}
+                  alt="සම්ප්‍රදාය මාර්ගෝපදේශ රූපය"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              
               </div>
             </div>
           </div>
