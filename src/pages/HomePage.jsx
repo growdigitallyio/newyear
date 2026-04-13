@@ -261,7 +261,7 @@ const HomePage = () => {
               <a className="text-[#e9c349] border-b border-[#e9c349]/30 font-sans tracking-widest uppercase text-xs" href="#">
                 සුබ වේලාවන්
               </a>
-              <a className="text-white/70 hover:text-[#e9c349] transition-colors font-sans tracking-widest uppercase text-xs" href="#">
+              <a className="text-white/70 hover:text-[#e9c349] transition-colors font-sans tracking-widest uppercase text-xs" href="#nakath-schedule">
                 සම්ප්‍රදායන්
               </a>
               <a className="text-white/70 hover:text-[#e9c349] transition-colors font-sans tracking-widest uppercase text-xs" href="#">
@@ -371,7 +371,7 @@ const HomePage = () => {
         </main>
 
         {/* Nakath Schedule Section */}
-        <section className="bg-surface relative py-32 px-8">
+        <section id="nakath-schedule" className="bg-surface relative py-32 px-8">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-baseline justify-between mb-20 gap-4">
               <div>
