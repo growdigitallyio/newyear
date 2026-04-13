@@ -532,8 +532,8 @@ const HomePage = () => {
         {/* Footer */}
         <footer className="w-full py-12 bg-[#15082a] border-t border-[#e9c349]/10">
           <a href="https://growdigitally.lk/" target="_blank" rel="noopener noreferrer" className="flex flex-col md:flex-row justify-center items-center px-12 opacity-70 hover:opacity-100 cursor-pointer max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-center items-center px-12 opacity-70 hover:opacity-100 cursor-pointer max-w-7xl mx-auto">
-              <div className="font-sans text-[13px] tracking-tight text-white/40 mb-4 md:mb-0">Made with ❤️ In﻿ Grow Digitally</div>
+            <div className="flex flex-col md:flex-row justify-center items-center px-12 cursor-pointer max-w-7xl mx-auto">
+              <div className="font-sans text-[18px] tracking-tigh text-purple-700 mb-4 md:mb-0">Made with ❤️ In﻿ Grow Digitally</div>
             </div>
           </a>
         </footer>
