@@ -20,6 +20,13 @@ const sinhalaMonthMap = {
   දෙසැම්බර්: 11,
 }
 
+const downloadPDF = () => {
+  const link = document.createElement("a");
+  link.href = "/avurudu_nakath_2026.pdf";
+  link.download = "2026-Avurudu-Nakath.pdf";
+  link.click();
+};
+
 const parseDateParts = (dateText) => {
   const match = dateText.match(/(\d{4})\s+([^\s]+)\s+(\d{1,2})/)
   if (!match) return null
@@ -257,7 +264,9 @@ const HomePage = () => {
         {/* TopAppBar */}
         <header className="w-full absolute top-0 z-50 bg-transparent">
           <nav className="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
-            <img src={logo} alt="Nakath Logo" className='w-50'/>
+            <a href="https://growdigitally.lk/" target="_blank" rel="noopener noreferrer">
+              <img src={logo} alt="Nakath Logo" className="w-50" />
+            </a>
             <div className="hidden md:flex space-x-12">
               <a className="text-[#e9c349] border-b border-[#e9c349]/30 font-sans tracking-widest uppercase text-xs" href="#">
                 සුබ වේලාවන්
@@ -270,7 +279,7 @@ const HomePage = () => {
               </a>
             </div>
             <div className="flex space-x-6 text-[#e9c349]">
-              <div className="text-2xl font-serif text-[#e9c349] drop-shadow-sm italic">නැකත් වේලාවන් 2026</div>
+              <div className="md:text-2xl text-[18px] font-serif text-[#e9c349] drop-shadow-sm italic">නැකත් වේලාවන් 2026</div>
             </div>
           </nav>
         </header>
@@ -375,12 +384,16 @@ const HomePage = () => {
                 <p className="font-label text-xs tracking-widest uppercase opacity-40">සංස්කෘතික චාරිත්‍ර සඳහා පූජනීය වේලාවන්</p>
               </div>
               <div className="h-px grow bg-secondary/10 mx-8 hidden md:block"></div>
-              <button className="font-label text-[10px] tracking-widest uppercase border border-secondary/20 px-6 py-3 rounded-full hover:bg-secondary/10 transition-all flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm" data-icon="download">
+              <a
+                href="/avurudu_nakath_2026.pdf"
+                download
+                className="font-label text-[10px] tracking-widest uppercase border border-secondary/20 px-6 py-3 rounded-full hover:bg-secondary/10 transition-all flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-sm">
                   download
                 </span>
                 සම්පූර්ණ කාලසටහන
-              </button>
+              </a>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 overflow-hidden rounded-xl border border-secondary/10">
@@ -500,20 +513,11 @@ const HomePage = () => {
 
         {/* Footer */}
         <footer className="w-full py-12 bg-[#15082a] border-t border-[#e9c349]/10">
-          <div className="flex flex-col md:flex-row justify-between items-center px-12 opacity-60 max-w-7xl mx-auto">
-            <div className="font-sans text-[10px] tracking-tight text-white/40 mb-4 md:mb-0">© 2026 විශේෂ උත්සව සංස්කරණය. සියලු හිමිකම් ඇවිරිණි.</div>
-            <div className="flex space-x-12">
-              <a className="font-sans text-[10px] tracking-tight text-white/40 hover:text-white transition-opacity uppercase" href="#">
-                සංස්කෘතික උරුමය
-              </a>
-              <a className="font-sans text-[10px] tracking-tight text-white/40 hover:text-white transition-opacity uppercase" href="#">
-                අප අමතන්න
-              </a>
-              <a className="font-sans text-[10px] tracking-tight text-white/40 hover:text-white transition-opacity uppercase" href="#">
-                පෞද්ගලිකත්වය
-              </a>
+          <a href="https://growdigitally.lk/" target="_blank" rel="noopener noreferrer" className="flex flex-col md:flex-row justify-center items-center px-12 opacity-70 hover:opacity-100 cursor-pointer max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-center items-center px-12 opacity-70 hover:opacity-100 cursor-pointer max-w-7xl mx-auto">
+              <div className="font-sans text-[13px] tracking-tight text-white/40 mb-4 md:mb-0">Made with ❤️ In﻿ Grow Digitally</div>
             </div>
-          </div>
+          </a>
         </footer>
       </div>
     </div>
