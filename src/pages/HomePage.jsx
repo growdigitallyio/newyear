@@ -3,6 +3,7 @@ import nakathDetails from '../assets/nakath'
 import kokis from '../assets/kokis.png'
 import kaum from '../assets/kaum.png'
 import kiribath from '../assets/kiribath.png'
+import logo from '../assets/Logo3.png'
 
 const sinhalaMonthMap = {
   ජනවාරි: 0,
@@ -256,7 +257,7 @@ const HomePage = () => {
         {/* TopAppBar */}
         <header className="w-full absolute top-0 z-50 bg-transparent">
           <nav className="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
-            <div className="text-2xl font-serif text-[#e9c349] drop-shadow-sm italic">නැකත් වේලාවන් 2026</div>
+            <img src={logo} alt="Nakath Logo" className='w-50'/>
             <div className="hidden md:flex space-x-12">
               <a className="text-[#e9c349] border-b border-[#e9c349]/30 font-sans tracking-widest uppercase text-xs" href="#">
                 සුබ වේලාවන්
@@ -264,23 +265,18 @@ const HomePage = () => {
               <a className="text-white/70 hover:text-[#e9c349] transition-colors font-sans tracking-widest uppercase text-xs" href="#nakath-schedule">
                 සම්ප්‍රදායන්
               </a>
-              <a className="text-white/70 hover:text-[#e9c349] transition-colors font-sans tracking-widest uppercase text-xs" href="#">
+              <a className="text-white/70 hover:text-[#e9c349] transition-colors font-sans tracking-widest uppercase text-xs" href="#gallery">
                 ඡායාරූප
               </a>
             </div>
             <div className="flex space-x-6 text-[#e9c349]">
-              <span className="material-symbols-outlined cursor-pointer hover:scale-95 duration-300" data-icon="calendar_today">
-                calendar_today
-              </span>
-              <span className="material-symbols-outlined cursor-pointer hover:scale-95 duration-300" data-icon="share">
-                share
-              </span>
+              <div className="text-2xl font-serif text-[#e9c349] drop-shadow-sm italic">නැකත් වේලාවන් 2026</div>
             </div>
           </nav>
         </header>
 
         {/* Hero Section */}
-        <main className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 overflow-hidden hero-gradient">
+        <main className="relative min-h-screen flex flex-col items-center justify-center pt-40 pb-12 overflow-hidden hero-gradient">
           <div className="absolute inset-0 subtle-pattern pointer-events-none"></div>
 
           {/* Decorative Background Elements */}
@@ -299,7 +295,7 @@ const HomePage = () => {
             />
           </div>
           <div className="relative z-10 text-center px-4 max-w-4xl">
-            <h1 className="font-headline font-bold italic text-4xl md:text-7xl mb-4 text-[#e9c349] tracking-tight leading-30">සුභ අලුත් අවුරුද්දක් වේවා 2026</h1>
+            <h1 className="font-headline font-bold italic text-4xl md:text-7xl mb-4 text-[#e9c349] tracking-tight leading-30">සුභ සිංහල දෙමළ අලුත් අවුරුද්දක් වේවා 2026</h1>
             <p className="font-label uppercase tracking-[0.4em] text-sm text-secondary mb-16 opacity-80">විශේෂ උත්සව සංස්කරණය</p>
 
             {/* Countdown Container */}
@@ -459,7 +455,7 @@ const HomePage = () => {
         </section>
 
         {/* Cultural Context Section (Bento Grid Style) */}
-        <section className="bg-surface-container-low py-32 px-8 overflow-hidden relative">
+        <section id='gallery' className="bg-surface-container-low py-32 px-8 overflow-hidden relative">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[800px] md:h-[600px]">
               <div className="md:col-span-2 md:row-span-2 bg-surface p-12 rounded-xl border border-secondary/10 flex flex-col justify-end relative overflow-hidden group">
